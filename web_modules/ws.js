@@ -6,7 +6,7 @@ try {
 }
 
 // Some versions of Safari Mac 5 and Safari iOS 4 seem to support websockets,
-// but can't communicate with websocketpp, which is what rippled uses.
+// but can't communicate with websocketpp, which is what radrd uses.
 //
 // Note that we check for both the WebSocket protocol version the browser seems
 // to implement as well as the user agent etc. The reason is that we want to err

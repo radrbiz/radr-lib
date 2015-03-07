@@ -1,5 +1,5 @@
 var assert  = require('assert');
-var UInt128 = require('ripple-lib').UInt128;
+var UInt128 = require('radr-lib').UInt128;
 
 describe('UInt', function() {
   describe('128', function() {

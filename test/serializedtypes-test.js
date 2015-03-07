@@ -1,8 +1,8 @@
 var assert           = require('assert');
-var SerializedObject = require('ripple-lib').SerializedObject;
-var types            = require('ripple-lib').types;
-var Amount           = require('ripple-lib').Amount;
-var sjcl             = require('ripple-lib').sjcl;
+var SerializedObject = require('radr-lib').SerializedObject;
+var types            = require('radr-lib').types;
+var Amount           = require('radr-lib').Amount;
+var sjcl             = require('radr-lib').sjcl;
 
 describe('Serialized types', function() {
   describe('Int8', function() {

@@ -27,7 +27,7 @@ Ledger.space = require('./ledgerspaces');
 /**
  * Generate the key for an AccountRoot entry.
  *
- * @param {String|UInt160} account Ripple Account
+ * @param {String|UInt160} account Radr Account
  * @return {UInt256}
  */
 Ledger.calcAccountRootEntryHash =
@@ -45,7 +45,7 @@ Ledger.prototype.calcAccountRootEntryHash = function (account) {
 /**
  * Generate the key for an Offer entry.
  *
- * @param {String|UInt160} account Ripple Account
+ * @param {String|UInt160} account Radr Account
  * @param {Number} sequence Sequence number of the OfferCreate transaction
  *   that instantiated this offer.
  * @return {UInt256}
@@ -69,8 +69,8 @@ Ledger.prototype.calcOfferEntryHash = function (account, sequence) {
  *
  * The ordering of the two account parameters does not matter.
  *
- * @param {String|UInt160} account1 First Ripple Account
- * @param {String|UInt160} account2 Second Ripple Account
+ * @param {String|UInt160} account1 First Radr Account
+ * @param {String|UInt160} account2 Second Radr Account
  * @param {String|Currency} currency The currency code
  * @return {UInt256}
  */
@@ -132,7 +132,7 @@ Ledger.prototype.calc_tx_hash = function () {
 *
 *   If `true`, will serialize each accountState item to binary and then back to
 *   json before finally serializing for hashing. This is mostly to expose any
-*   issues with ripple-lib's binary <--> json codecs.
+*   issues with radr-lib's binary <--> json codecs.
 *
 */
 Ledger.prototype.calc_account_hash = function (options) {

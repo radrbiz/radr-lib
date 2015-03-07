@@ -1,4 +1,4 @@
-// Represent Ripple amounts and currencies.
+// Represent Radr amounts and currencies.
 // - Numbers in hex are big-endian.
 
 var assert    = require('assert');
@@ -184,7 +184,7 @@ Amount.prototype.divide = function(divisor) {
  * @param {Amount} denominator The denominator (bottom half) of the fraction.
  * @param opts Options for the calculation.
  * @param opts.reference_date {Date|Number} Date based on which demurrage/interest
- *   should be applied. Can be given as JavaScript Date or int for Ripple epoch.
+ *   should be applied. Can be given as JavaScript Date or int for Radr epoch.
  * @return {Amount} The resulting ratio. Unit will be the same as numerator.
  */
 
@@ -246,7 +246,7 @@ Amount.prototype.ratio_human = function(denominator, opts) {
  * @param {Amount} factor The second factor of the product.
  * @param opts Options for the calculation.
  * @param opts.reference_date {Date|Number} Date based on which demurrage/interest
- *   should be applied. Can be given as JavaScript Date or int for Ripple epoch.
+ *   should be applied. Can be given as JavaScript Date or int for Radr epoch.
  * @return {Amount} The product. Unit will be the same as the first factor.
  */
 Amount.prototype.product_human = function(factor, opts) {
@@ -303,8 +303,8 @@ Amount.prototype.invert = function() {
 /**
  * Canonicalize amount value
  *
- * Mirrors rippled's internal Amount representation
- * From https://github.com/ripple/rippled/blob/develop/src/ripple/data/protocol/STAmount.h#L31-L40
+ * Mirrors radrd's internal Amount representation
+ * From https://github.com/radr/radrd/blob/develop/src/radr/data/protocol/STAmount.h#L31-L40
  *
  * Internal form:
  * 1: If amount is zero, then value is zero and offset is -100
@@ -552,7 +552,7 @@ Amount.prototype.parse_issuer = function(issuer) {
  *   demurrage has to be applied when the quality is decoded, otherwise the
  *   price will be false.
  * @param opts.reference_date {Date|Number} Date based on which demurrage/interest
- *   should be applied. Can be given as JavaScript Date or int for Ripple epoch.
+ *   should be applied. Can be given as JavaScript Date or int for Radr epoch.
  * @param opts.xrp_as_drops {Boolean} Whether XRP amount should be treated as
  *   drops. When the base currency is XRP, the quality is calculated in drops.
  *   For human use however, we want to think of 1000000 drops as 1 XRP and
@@ -771,7 +771,7 @@ Amount.prototype.to_text = function() {
  * intended by display functions such as toHuman().
  *
  * @param referenceDate {Date|Number} Date based on which demurrage/interest
- *   should be applied. Can be given as JavaScript Date or int for Ripple epoch.
+ *   should be applied. Can be given as JavaScript Date or int for Radr epoch.
  * @return {Amount} The amount with interest applied.
  */
 Amount.prototype.applyInterest = function(referenceDate) {
@@ -802,7 +802,7 @@ Amount.prototype.applyInterest = function(referenceDate) {
  * @param opts.signed {Boolean|String} Whether negative numbers will have a
  *   prefix. If String, that string will be used as the prefix. Default: '-'
  * @param opts.reference_date {Date|Number} Date based on which demurrage/interest
- *   should be applied. Can be given as JavaScript Date or int for Ripple epoch.
+ *   should be applied. Can be given as JavaScript Date or int for Radr epoch.
  */
 Amount.prototype.to_human = function(opts) {
   opts = opts || {};

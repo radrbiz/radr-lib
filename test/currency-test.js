@@ -1,6 +1,6 @@
 var assert   = require('assert');
-var currency = require('ripple-lib').Currency;
-var timeUtil = require('ripple-lib').utils.time;
+var currency = require('radr-lib').Currency;
+var timeUtil = require('radr-lib').utils.time;
 
 describe('Currency', function() {
   describe('json_rewrite', function() {

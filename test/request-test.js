@@ -1,9 +1,9 @@
 var assert = require('assert');
-var Request = require('ripple-lib').Request;
-var Remote = require('ripple-lib').Remote;
-var Server = require('ripple-lib').Server;
-var Currency = require('ripple-lib').Currency;
-var RippleError = require('ripple-lib').RippleError;
+var Request = require('radr-lib').Request;
+var Remote = require('radr-lib').Remote;
+var Server = require('radr-lib').Server;
+var Currency = require('radr-lib').Currency;
+var RadrError = require('radr-lib').RadrError;
 
 function makeServer(url) {
   var server = new Server(new process.EventEmitter(), url);
@@ -202,7 +202,7 @@ describe('Request', function() {
     request.callback(function(err, res) {
       setImmediate(function() {
         assert.strictEqual(requests, 2, 'Failed to broadcast');
-        assert.deepEqual(err, new RippleError(errorResponse));
+        assert.deepEqual(err, new RadrError(errorResponse));
         done();
       });
     });
@@ -454,7 +454,7 @@ describe('Request', function() {
     request.callback(function(err, res) {
       setTimeout(function() {
         // Wait for the request that would emit 'success' to time out
-        assert.deepEqual(err, new RippleError(errorResponse));
+        assert.deepEqual(err, new RadrError(errorResponse));
         assert.deepEqual(servers[0].listeners('connect'), [ ]);
         done();
       }, 20);

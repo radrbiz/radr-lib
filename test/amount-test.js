@@ -1,7 +1,7 @@
 var assert      = require('assert');
-var Amount      = require('ripple-lib').Amount;
-var UInt160     = require('ripple-lib').UInt160;
-var load_config = require('ripple-lib').config.load;
+var Amount      = require('radr-lib').Amount;
+var UInt160     = require('radr-lib').UInt160;
+var load_config = require('radr-lib').config.load;
 var config      = require('./config-example');
 
 load_config(config);

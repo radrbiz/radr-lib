@@ -1,9 +1,9 @@
 var assert           = require('assert');
-var Amount           = require('ripple-lib').Amount;
-var Transaction      = require('ripple-lib').Transaction;
-var TransactionQueue = require('ripple-lib').TransactionQueue;
-var Remote           = require('ripple-lib').Remote;
-var Server           = require('ripple-lib').Server;
+var Amount           = require('radr-lib').Amount;
+var Transaction      = require('radr-lib').Transaction;
+var TransactionQueue = require('radr-lib').TransactionQueue;
+var Remote           = require('radr-lib').Remote;
+var Server           = require('radr-lib').Server;
 
 var transactionResult = {
   engine_result: 'tesSUCCESS',
@@ -201,22 +201,22 @@ describe('Transaction', function() {
   it('Compute fee', function() {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
 
-    var s2 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s2 = new Server(remote, 'wss://s-west.radr.biz:443');
     s2._connected = true;
     s2._load_factor = 256 * 4;
 
-    var s3 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s3 = new Server(remote, 'wss://s-west.radr.biz:443');
     s3._connected = true;
     s3._load_factor = 256 * 8;
 
-    var s4 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s4 = new Server(remote, 'wss://s-west.radr.biz:443');
     s4._connected = true;
     s4._load_factor = 256 * 8;
 
-    var s5 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s5 = new Server(remote, 'wss://s-west.radr.biz:443');
     s5._connected = true;
     s5._load_factor = 256 * 7;
 
@@ -241,14 +241,14 @@ describe('Transaction', function() {
   it('Compute fee - no connected server', function() {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = false;
 
-    var s2 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s2 = new Server(remote, 'wss://s-west.radr.biz:443');
     s2._connected = false;
     s2._load_factor = 256 * 4;
 
-    var s3 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s3 = new Server(remote, 'wss://s-west.radr.biz:443');
     s3._connected = false;
     s3._load_factor = 256 * 8;
 
@@ -266,14 +266,14 @@ describe('Transaction', function() {
   it('Compute fee - one connected server', function() {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = false;
 
-    var s2 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s2 = new Server(remote, 'wss://s-west.radr.biz:443');
     s2._connected = false;
     s2._load_factor = 256 * 4;
 
-    var s3 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s3 = new Server(remote, 'wss://s-west.radr.biz:443');
     s3._connected = true;
     s3._load_factor = 256 * 8;
 
@@ -291,19 +291,19 @@ describe('Transaction', function() {
   it('Does not compute a median fee with floating point', function() {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
 
-    var s2 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s2 = new Server(remote, 'wss://s-west.radr.biz:443');
     s2._connected = true;
     s2._load_factor = 256 * 4;
 
-    var s3 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s3 = new Server(remote, 'wss://s-west.radr.biz:443');
     s3._connected = true;
 
     s3._load_factor = (256 * 7) + 1;
 
-    var s4 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s4 = new Server(remote, 'wss://s-west.radr.biz:443');
     s4._connected = true;
     s4._load_factor = 256 * 16;
 
@@ -332,18 +332,18 @@ describe('Transaction', function() {
   it('Compute fee - even server count', function() {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
 
-    var s2 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s2 = new Server(remote, 'wss://s-west.radr.biz:443');
     s2._connected = true;
     s2._load_factor = 256 * 4;
 
-    var s3 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s3 = new Server(remote, 'wss://s-west.radr.biz:443');
     s3._connected = true;
     s3._load_factor = 256 * 8;
 
-    var s4 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s4 = new Server(remote, 'wss://s-west.radr.biz:443');
     s4._connected = true;
     s4._load_factor = 256 * 16;
 
@@ -363,7 +363,7 @@ describe('Transaction', function() {
   it('Complete transaction', function(done) {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
 
     remote._servers = [ s1 ];
@@ -462,7 +462,7 @@ describe('Transaction', function() {
     var remote = new Remote();
     var transaction = new Transaction(remote);
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
 
     remote._servers = [ s1 ];
@@ -485,7 +485,7 @@ describe('Transaction', function() {
   it('Complete transaction - compute fee exceeds max fee', function(done) {
     var remote = new Remote({ max_fee: 10 });
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
     s1._load_factor = 256 * 16;
 
@@ -509,7 +509,7 @@ describe('Transaction', function() {
   it('Complete transaction - canonical flags', function(done) {
     var remote = new Remote();
 
-    var s1 = new Server(remote, 'wss://s-west.ripple.com:443');
+    var s1 = new Server(remote, 'wss://s-west.radr.biz:443');
     s1._connected = true;
     s1._load_factor = 256;
 
@@ -1747,7 +1747,7 @@ describe('Transaction', function() {
     function submitCallback(err, res) {
       setImmediate(function() {
         assert(err);
-        assert.strictEqual(err.constructor.name, 'RippleError');
+        assert.strictEqual(err.constructor.name, 'RadrError');
         assert(receivedError);
         done();
       });
@@ -1780,7 +1780,7 @@ describe('Transaction', function() {
     var remote = new Remote();
     remote.setSecret('rJaT8TafQfYJqDm8aC5n3Yx5yWEL2Ery79', 'snPwFATthTkKnGjEW73q3TL4yci1Q');
 
-    var server = new Server(remote, 'wss://s1.ripple.com:443');
+    var server = new Server(remote, 'wss://s1.radr.biz:443');
     server._computeFee = function() { return '12'; };
     server._connected = true;
 

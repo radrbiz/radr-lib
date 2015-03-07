@@ -1,17 +1,17 @@
-#ripple-lib
+#radr-lib
 
-A JavaScript API for interacting with Ripple in Node.js and the browser
+A JavaScript API for interacting with Radr in Node.js and the browser
 
-[![Build Status](https://travis-ci.org/ripple/ripple-lib.svg?branch=develop)](https://travis-ci.org/ripple/ripple-lib) [![Coverage Status](https://coveralls.io/repos/ripple/ripple-lib/badge.png?branch=develop)](https://coveralls.io/r/ripple/ripple-lib?branch=develop)
+[![Build Status](https://travis-ci.org/radr/radr-lib.svg?branch=develop)](https://travis-ci.org/radr/radr-lib) [![Coverage Status](https://coveralls.io/repos/radr/radr-lib/badge.png?branch=develop)](https://coveralls.io/r/radr/radr-lib?branch=develop)
 
-[![NPM](https://nodei.co/npm/ripple-lib.png)](https://www.npmjs.org/package/ripple-lib)
+[![NPM](https://nodei.co/npm/radr-lib.png)](https://www.npmjs.org/package/radr-lib)
 
 ###Features
 
-+ Connect to a rippled server in JavaScript (Node.js or browser)
-+ Issue [rippled API](https://ripple.com/build/rippled-apis/) requests
-+ Listen to events on the Ripple network (transaction, ledger, etc.)
-+ Sign and submit transactions to the Ripple network
++ Connect to a radrd server in JavaScript (Node.js or browser)
++ Issue [radrd API](https://radr.biz/build/radrd-apis/) requests
++ Listen to events on the Radr network (transaction, ledger, etc.)
++ Sign and submit transactions to the Radr network
 
 ###In this file
 
@@ -23,36 +23,36 @@ A JavaScript API for interacting with Ripple in Node.js and the browser
 
 1. [Guides](docs/GUIDES.md)
 2. [API Reference](docs/REFERENCE.md)
-3. [Wiki](https://ripple.com/wiki/Ripple_JavaScript_library)
+3. [Wiki](https://radr.biz/wiki/Radr_JavaScript_library)
 
 ###Also see
 
-+ [The Ripple wiki](https://ripple.com/wiki)
-+ [ripple.com](https://ripple.com)
++ [The Radr wiki](https://radr.biz/wiki)
++ [radr.biz](https://radr.biz)
 
 ##Installation
 
 **Via npm for Node.js**
 
 ```
-  $ npm install ripple-lib
+  $ npm install radr-lib
 ```
 
 **Via bower (for browser use)**
 
 ```
-  $ bower install ripple
+  $ bower install radr
 ```
 
-See the [bower-ripple repo](https://github.com/ripple/bower-ripple) for additional bower instructions
+See the [bower-radr repo](https://github.com/radr/bower-radr) for additional bower instructions
 
 
-**Building ripple-lib for browser environments**
+**Building radr-lib for browser environments**
 
-ripple-lib uses Gulp to generate browser builds. These steps will generate minified and non-minified builds of ripple-lib in the `build/` directory.
+radr-lib uses Gulp to generate browser builds. These steps will generate minified and non-minified builds of radr-lib in the `build/` directory.
 
 ```
-  $ git clone https://github.com/ripple/ripple-lib
+  $ git clone https://github.com/radr/radr-lib
   $ npm install
   $ npm run build
 ```
@@ -61,22 +61,22 @@ ripple-lib uses Gulp to generate browser builds. These steps will generate minif
 
 You may generate browser builds that contain a subset of features. To do this, run `./node_modules/.bin/gulp build-<name>`
 
-+ `build-core` Contains the functionality to make requests and listen for events such as `ledgerClose`. Only `ripple.Remote` is currently exposed. Advanced features like transaction submission and orderbook tracking are excluded from this build.
++ `build-core` Contains the functionality to make requests and listen for events such as `ledgerClose`. Only `radr.Remote` is currently exposed. Advanced features like transaction submission and orderbook tracking are excluded from this build.
 
 ##Quick start
 
-`Remote.js` ([remote.js](https://github.com/ripple/ripple-lib/blob/develop/src/js/ripple/remote.js)) is the point of entry for interacting with rippled
+`Remote.js` ([remote.js](https://github.com/radr/radr-lib/blob/develop/src/js/radr/remote.js)) is the point of entry for interacting with radrd
 
 ```js
-/* Loading ripple-lib with Node.js */
-var Remote = require('ripple-lib').Remote;
+/* Loading radr-lib with Node.js */
+var Remote = require('radr-lib').Remote;
 
-/* Loading ripple-lib in a webpage */
-// var Remote = ripple.Remote;
+/* Loading radr-lib in a webpage */
+// var Remote = radr.Remote;
 
 var remote = new Remote({
   // see the API Reference for available options
-  servers: [ 'wss://s1.ripple.com:443' ]
+  servers: [ 'wss://s1.radr.biz:443' ]
 });
 
 remote.connect(function() {
@@ -97,4 +97,4 @@ remote.connect(function() {
 
 **Generating code coverage**
 
-ripple-lib uses `istanbul` to generate code coverage. To create a code coverage report, run `npm test --coverage`. The report will be created in `coverage/lcov-report/`.
+radr-lib uses `istanbul` to generate code coverage. To create a code coverage report, run `npm test --coverage`. The report will be created in `coverage/lcov-report/`.

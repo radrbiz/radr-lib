@@ -1,7 +1,7 @@
 /**
- * Ripple ledger namespace prefixes.
+ * Radr ledger namespace prefixes.
  *
- * The Ripple ledger is a key-value store. In order to avoid name collisions,
+ * The Radr ledger is a key-value store. In order to avoid name collisions,
  * names are partitioned into namespaces.
  *
  * Each namespace is just a single character prefix.

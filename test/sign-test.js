@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Seed   = require('ripple-lib').Seed;
+var Seed   = require('radr-lib').Seed;
 
 function _isNaN(n) {
   return typeof n === 'number' && isNaN(n);
@@ -7,7 +7,7 @@ function _isNaN(n) {
 
 describe('Signing', function() {
   describe('Keys', function() {
-    it('SigningPubKey 1 (ripple-client issue #245)',  function () {
+    it('SigningPubKey 1 (radr-client issue #245)',  function () {
       var seed = Seed.from_json('saESc82Vun7Ta5EJRzGJbrXb5HNYk');
       var key = seed.get_key('rBZ4j6MsoctipM6GEyHSjQKzXG3yambDnZ');
       var pub = key.to_hex_pub();

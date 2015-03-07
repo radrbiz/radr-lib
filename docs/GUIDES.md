@@ -1,11 +1,11 @@
 #Guides
 
-This file provides step-by-step walkthroughs for some of the most common usages of `ripple-lib`.
+This file provides step-by-step walkthroughs for some of the most common usages of `radr-lib`.
 
 ###In this document
 
-1. [Connecting to the Ripple network with `Remote`](GUIDES.md#connecting-to-the-ripple-network)
-2. [Using `Remote` functions and `Request` objects](GUIDES.md#sending-rippled-API-requests)
+1. [Connecting to the Radr network with `Remote`](GUIDES.md#connecting-to-the-radr-network)
+2. [Using `Remote` functions and `Request` objects](GUIDES.md#sending-radrd-API-requests)
 3. [Listening to the network](GUIDES.md#listening-to-the-network)
 4. [Submitting a payment to the network](GUIDES.md#submitting-a-payment-to-the-network)
    * [A note on transaction fees](GUIDES.md#a-note-on-transaction-fees)
@@ -13,19 +13,19 @@ This file provides step-by-step walkthroughs for some of the most common usages 
 
 ###Also see
 
-1. [The ripple-lib README](../README.md)
-2. [The ripple-lib API Reference](REFERENCE.md)
+1. [The radr-lib README](../README.md)
+2. [The radr-lib API Reference](REFERENCE.md)
 
-##Connecting to the Ripple network
+##Connecting to the Radr network
 
-1. [Get ripple-lib](README.md#getting-ripple-lib)
-2. Load the ripple-lib module into a Node.js file or webpage:
+1. [Get radr-lib](README.md#getting-radr-lib)
+2. Load the radr-lib module into a Node.js file or webpage:
   ```js
-  /* Loading ripple-lib with Node.js */
-  var Remote = require('ripple-lib').Remote;
+  /* Loading radr-lib with Node.js */
+  var Remote = require('radr-lib').Remote;
 
-  /* Loading ripple-lib in a webpage */
-  // var Remote = ripple.Remote;
+  /* Loading radr-lib in a webpage */
+  // var Remote = radr.Remote;
   ```
 3. Create a new `Remote` and connect to the network:
   ```js
@@ -35,7 +35,7 @@ This file provides step-by-step walkthroughs for some of the most common usages 
     trusted:        true,
     local_signing:  true,
     servers: [
-      { host: 's-west.ripple.com', port: 443, secure: true }
+      { host: 's-west.radr.biz', port: 443, secure: true }
     ]
   }
 
@@ -49,15 +49,15 @@ This file provides step-by-step walkthroughs for some of the most common usages 
 
 4. You're connected! Read on to see what to do now.
 
-##Generating a new Ripple Wallet
+##Generating a new Radr Wallet
 
   ```js
-    var ripple = require('ripple-lib');
+    var radr = require('radr-lib');
 
     // subscribing to a server allows for more entropy
-    var remote = new ripple.Remote({
+    var remote = new radr.Remote({
       servers: [
-        { host: 's1.ripple.com', port: 443, secure: true }
+        { host: 's1.radr.biz', port: 443, secure: true }
       ]
     });
 
@@ -67,9 +67,9 @@ This file provides step-by-step walkthroughs for some of the most common usages 
 
     // Wait for randomness to have been added.
     // The entropy of the random generator is increased
-    // by random data received from a rippled
+    // by random data received from a radrd
     remote.once('random', function(err, info) {
-      var wallet = ripple.Wallet.generate();
+      var wallet = radr.Wallet.generate();
       console.log(wallet);
       // { address: 'rEf4sbVobiiDGExrNj2PkNHGMA8eS6jWh3',
       //   secret: 'shFh4a38EZpEdZxrLifEnVPAoBRce' }
@@ -77,13 +77,13 @@ This file provides step-by-step walkthroughs for some of the most common usages 
   ```
 
 
-##Sending rippled API requests
+##Sending radrd API requests
 
 `Remote` contains functions for constructing a `Request` object.
 
 A `Request` is an `EventEmitter` so you can listen for success or failure events -- or, instead, you can provide a callback.
 
-Here is an example, using [requestServerInfo](https://ripple.com/wiki/JSON_Messages#server_info).
+Here is an example, using [requestServerInfo](https://radr.biz/wiki/JSON_Messages#server_info).
 
 + Constructing a `Request` with event listeners
 ```js
@@ -116,21 +116,21 @@ __NOTE:__ See the API Reference for available [`Remote` functions](REFERENCE.md#
 
 ##Listening to the network
 
-See the [wiki](https://ripple.com/wiki/JSON_Messages#subscribe) for details on subscription requests.
+See the [wiki](https://radr.biz/wiki/JSON_Messages#subscribe) for details on subscription requests.
 
 ```js
- /* Loading ripple-lib with Node.js */
-  var Remote = require('ripple-lib').Remote;
+ /* Loading radr-lib with Node.js */
+  var Remote = require('radr-lib').Remote;
 
-  /* Loading ripple-lib in a webpage */
-  // var Remote = ripple.Remote;
+  /* Loading radr-lib in a webpage */
+  // var Remote = radr.Remote;
 
   var remote = new Remote({options});
 
   remote.connect(function() {
     var remote = new Remote({
       // see the API Reference for available options
-      servers: [ 'wss://s1.ripple.com:443' ]
+      servers: [ 'wss://s1.radr.biz:443' ]
     });
 
     remote.connect(function() {
@@ -168,21 +168,21 @@ See the [wiki](https://ripple.com/wiki/JSON_Messages#subscribe) for details on s
     });
   });
 ```
-* https://ripple.com/wiki/RPC_API#transactions_stream_messages
-* https://ripple.com/wiki/RPC_API#ledger_stream_messages
+* https://radr.biz/wiki/RPC_API#transactions_stream_messages
+* https://radr.biz/wiki/RPC_API#ledger_stream_messages
 
 ##Submitting a payment to the network
 
-Submitting a payment transaction to the Ripple network involves connecting to a `Remote`, creating a transaction, signing it with the user's secret, and submitting it to the `rippled` server. Note that the `Amount` module is used to convert human-readable amounts like '1XRP' or '10.50USD' to the type of Amount object used by the Ripple network.
+Submitting a payment transaction to the Radr network involves connecting to a `Remote`, creating a transaction, signing it with the user's secret, and submitting it to the `radrd` server. Note that the `Amount` module is used to convert human-readable amounts like '1XRP' or '10.50USD' to the type of Amount object used by the Radr network.
 
 ```js
-/* Loading ripple-lib Remote and Amount modules in Node.js */
-var Remote = require('ripple-lib').Remote;
-var Amount = require('ripple-lib').Amount;
+/* Loading radr-lib Remote and Amount modules in Node.js */
+var Remote = require('radr-lib').Remote;
+var Amount = require('radr-lib').Amount;
 
-/* Loading ripple-lib Remote and Amount modules in a webpage */
-// var Remote = ripple.Remote;
-// var Amount = ripple.Amount;
+/* Loading radr-lib Remote and Amount modules in a webpage */
+// var Remote = radr.Remote;
+// var Amount = radr.Amount;
 
 var MY_ADDRESS = 'rrrMyAddress';
 var MY_SECRET  = 'secret';
@@ -208,9 +208,9 @@ remote.connect(function() {
 
 ###A note on transaction fees
 
-A full description of network transaction fees can be found on the [Ripple Wiki](https://ripple.com/wiki/Transaction_Fee).
+A full description of network transaction fees can be found on the [Radr Wiki](https://radr.biz/wiki/Transaction_Fee).
 
-In short, transaction fees are very small amounts (on the order of ~10) of [XRP drops](https://ripple.com/wiki/Ripple_credits#Notes_on_drops) spent and destroyed with every transaction. They are largely used to account for network load and prevent spam. With `ripple-lib`, transaction fees are calculated locally by default and the fee you are willing to pay is submitted along with your transaction.
+In short, transaction fees are very small amounts (on the order of ~10) of [XRP drops](https://radr.biz/wiki/Radr_credits#Notes_on_drops) spent and destroyed with every transaction. They are largely used to account for network load and prevent spam. With `radr-lib`, transaction fees are calculated locally by default and the fee you are willing to pay is submitted along with your transaction.
 
 Since the fee required for a transaction may change between the time when the original fee was calculated and the time when the transaction is submitted, it is wise to use the [`fee_cushion`](REFERENCE.md#1-remote-options) to ensure that the transaction will go through. For example, suppose the original fee calculated for a transaction was 10 XRP drops but at the instant the transaction is submitted the server is experiencing a higher load and it has raised its minimum fee to 12 XRP drops. Without a `fee_cusion`, this transaction would not be processed by the server, but with a `fee_cusion` of, say, 1.5 it would be processed and you would just pay the 2 extra XRP drops.
 
@@ -222,13 +222,13 @@ The [`max_fee`](REFERENCE.md#1-remote-options) option can be used to avoid submi
 Submitting a trade offer to the network is similar to submitting a payment transaction. Here is an example offering to sell 1 USD in exchange for 100 XRP:
 
 ```js
-/* Loading ripple-lib Remote and Amount modules in Node.js */
-var Remote = require('ripple-lib').Remote;
-var Amount = require('ripple-lib').Amount;
+/* Loading radr-lib Remote and Amount modules in Node.js */
+var Remote = require('radr-lib').Remote;
+var Amount = require('radr-lib').Amount;
 
-/* Loading ripple-lib Remote and Amount modules in a webpage */
-// var Remote = ripple.Remote;
-// var Amount = ripple.Amount;
+/* Loading radr-lib Remote and Amount modules in a webpage */
+// var Remote = radr.Remote;
+// var Amount = radr.Amount;
 
 var MY_ADDRESS = 'rrrMyAddress';
 var MY_SECRET  = 'secret';

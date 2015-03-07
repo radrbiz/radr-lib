@@ -6,6 +6,7 @@ var Base = {};
 
 var alphabets = Base.alphabets = {
   ripple:  'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz',
+  radr:  'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz',
   tipple:  'RPShNAF39wBUDnEGHJKLM4pQrsT7VWXYZ2bcdeCg65jkm8ofqi1tuvaxyz',
   bitcoin:  '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 };
@@ -158,7 +159,7 @@ Object.keys(alphabets).forEach(function(alphabet){
 // --> input: big-endian array of bytes.
 // <-- string at least as long as input.
 Base.encode = function(input, alpha) {
-  return this.encoders[alpha || 'ripple'].encode(input);
+  return this.encoders[alpha || 'radr'].encode(input);
 };
 
 // --> input: String
@@ -168,7 +169,7 @@ Base.decode = function(input, alpha) {
     return void(0);
   }
   try {
-    return this.encoders[alpha || 'ripple'].decode(input);
+    return this.encoders[alpha || 'radr'].decode(input);
   }
   catch(e) {
     return (void 0);

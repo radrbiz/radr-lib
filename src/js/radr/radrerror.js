@@ -1,7 +1,7 @@
 var util   = require('util');
 var extend = require('extend');
 
-function RippleError(code, message) {
+function RadrError(code, message) {
   switch (typeof code) {
     case 'object':
       extend(this, code);
@@ -26,8 +26,8 @@ function RippleError(code, message) {
   }
 };
 
-util.inherits(RippleError, Error);
+util.inherits(RadrError, Error);
 
-RippleError.prototype.name = 'RippleError';
+RadrError.prototype.name = 'RadrError';
 
-exports.RippleError = RippleError;
+exports.RadrError = RadrError;

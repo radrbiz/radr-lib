@@ -152,7 +152,7 @@ OrderBook.prototype.subscribe = function() {
 };
 
 /**
- * Unhook event listeners and prevent ripple-lib from further work on this
+ * Unhook event listeners and prevent radr-lib from further work on this
  * orderbook. There is no more orderbook stream, so "unsubscribe" is nominal
  */
 
@@ -479,7 +479,7 @@ OrderBook.prototype.setFundedAmount = function(offer, fundedAmount) {
 
 /**
  * DEPRECATED:
- * Should only be called for old versions of rippled
+ * Should only be called for old versions of radrd
  *
  * Determine what an account is funded to offer for orderbook's
  * currency/issuer

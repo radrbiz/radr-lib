@@ -3,8 +3,8 @@
  *
  * Mapping of type ids to data types. The type id is specified by the high
  *
- * For reference, see rippled's definition:
- * https://github.com/ripple/rippled/blob/develop/src/ripple/data/protocol/SField.cpp
+ * For reference, see radrd's definition:
+ * https://github.com/radr/radrd/blob/develop/src/radr/data/protocol/SField.cpp
  */
 var TYPES_MAP = exports.types = [
   void(0),

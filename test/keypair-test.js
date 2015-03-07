@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Seed   = require('ripple-lib').Seed;
+var Seed   = require('radr-lib').Seed;
 
 describe('KeyPair', function() {
   it('can generate an address', function () {

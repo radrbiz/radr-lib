@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Seed   = require('ripple-lib').Seed;
+var Seed   = require('radr-lib').Seed;
 
 describe('Seed', function() {
   it('can generate many addresses', function () {
@@ -35,7 +35,7 @@ describe('Seed', function() {
       var nth_for_seed = test_data[nth][2];
       var expected = test_data[nth][3];
 
-      //`seed.get_key($ripple_address)` is arguably an ill concieved feature
+      //`seed.get_key($radr_address)` is arguably an ill concieved feature
       // as it needs to generate `nth` many keypairs and generate hashed public
       // keys (addresses) for equality tests ??
       // Would need remote.set_secret(address, private_key_not_seed) ??

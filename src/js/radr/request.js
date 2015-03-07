@@ -3,7 +3,7 @@ var util         = require('util');
 var async        = require('async');
 var UInt160      = require('./uint160').UInt160;
 var Currency     = require('./currency').Currency;
-var RippleError  = require('./rippleerror').RippleError;
+var RadrError  = require('./radrerror').RadrError;
 var Server       = require('./server').Server;
 
 // Request events emitted:
@@ -217,8 +217,8 @@ Request.prototype.callback = function(callback, successEvent, errorEvent) {
     if (!called) {
       called = true;
 
-      if (!(error instanceof RippleError)) {
-        error = new RippleError(error);
+      if (!(error instanceof RadrError)) {
+        error = new RadrError(error);
       }
 
       callback.call(self, error);

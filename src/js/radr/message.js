@@ -11,14 +11,14 @@ var UInt160            = require('./uint160').UInt160;
 var Message = {};
 
 Message.HASH_FUNCTION  = sjcl.hash.sha512.hash;
-Message.MAGIC_BYTES    = 'Ripple Signed Message:\n';
+Message.MAGIC_BYTES    = 'Radr Signed Message:\n';
 
 var REGEX_HEX = /^[0-9a-fA-F]+$/;
 var REGEX_BASE64 = /^([A-Za-z0-9\+]{4})*([A-Za-z0-9\+]{2}==)|([A-Za-z0-9\+]{3}=)?$/;
 
 /**
  *  Produce a Base64-encoded signature on the given message with
- *  the string 'Ripple Signed Message:\n' prepended.
+ *  the string 'Radr Signed Message:\n' prepended.
  *
  *  Note that this signature uses the signing function that includes
  *  a recovery_factor to be able to extract the public key from the signature
@@ -28,7 +28,7 @@ var REGEX_BASE64 = /^([A-Za-z0-9\+]{4})*([A-Za-z0-9\+]{2}==)|([A-Za-z0-9\+]{3}=)
  *
  *  @param {String} message
  *  @param {sjcl.ecc.ecdsa.secretKey|Any format accepted by Seed.from_json} secret_key
- *  @param {RippleAddress} [The first key] account Field to specify the signing account. 
+ *  @param {RadrAddress} [The first key] account Field to specify the signing account.
  *    If this is omitted the first account produced by the secret generator will be used.
  *  @returns {Base64-encoded String} signature
  */
@@ -49,7 +49,7 @@ Message.signMessage = function(message, secret_key, account) {
  *
  *  @param {bitArray|Hex-encoded String} hash
  *  @param {sjcl.ecc.ecdsa.secretKey|Any format accepted by Seed.from_json} secret_key
- *  @param {RippleAddress} [The first key] account Field to specify the signing account. 
+ *  @param {RadrAddress} [The first key] account Field to specify the signing account.
  *    If this is omitted the first account produced by the secret generator will be used.
  *  @returns {Base64-encoded String} signature
  */
@@ -79,16 +79,16 @@ Message.signHash = function(hash, secret_key, account) {
  *  Verify the signature on a given message.
  *
  *  Note that this function is asynchronous. 
- *  The ripple-lib remote is used to check that the public
+ *  The radr-lib remote is used to check that the public
  *  key extracted from the signature corresponds to one that is currently
  *  active for the given account.
  *
  *  @static
  *
  *  @param {String} data.message
- *  @param {RippleAddress} data.account
+ *  @param {RadrAddress} data.account
  *  @param {Base64-encoded String} data.signature
- *  @param {ripple-lib Remote} remote
+ *  @param {radr-lib Remote} remote
  *  @param {Function} callback
  *
  *  @callback callback
@@ -112,16 +112,16 @@ Message.verifyMessageSignature = function(data, remote, callback) {
  *  Verify the signature on a given hash.
  *
  *  Note that this function is asynchronous. 
- *  The ripple-lib remote is used to check that the public
+ *  The radr-lib remote is used to check that the public
  *  key extracted from the signature corresponds to one that is currently
  *  active for the given account.
  *
  *  @static
  *
  *  @param {bitArray|Hex-encoded String} data.hash
- *  @param {RippleAddress} data.account
+ *  @param {RadrAddress} data.account
  *  @param {Base64-encoded String} data.signature
- *  @param {ripple-lib Remote} remote
+ *  @param {radr-lib Remote} remote
  *  @param {Function} callback
  *
  *  @callback callback
@@ -149,7 +149,7 @@ Message.verifyHashSignature = function(data, remote, callback) {
 
   account = data.account || data.address;
   if (!account || !UInt160.from_json(account).is_valid()) {
-    return callback(new Error('Account must be a valid ripple address'));
+    return callback(new Error('Account must be a valid radr address'));
   }
 
   signature = data.signature;

@@ -220,7 +220,7 @@ Account.prototype.lines = function(callback) {
  * Retrieve this account's single trust line.
  *
  * @param {string} currency Currency
- * @param {string} address Ripple address
+ * @param {string} address Radr address
  * @param {function(err, line)} callback Called with the result
  * @returns {Account}
  */
@@ -297,7 +297,7 @@ Account.prototype.submit = function(transaction) {
 /**
  *  Check whether the given public key is valid for this account
  *
- *  @param {Hex-encoded String|RippleAddress} public_key
+ *  @param {Hex-encoded String|RadrAddress} public_key
  *  @param {Function} callback
  *
  *  @callback
@@ -364,15 +364,15 @@ Account.prototype.publicKeyIsActive = function(public_key, callback) {
 };
 
 /**
- *  Convert a hex-encoded public key to a Ripple Address
+ *  Convert a hex-encoded public key to a Radr Address
  *
  *  @static
  *
- *  @param {Hex-encoded string|RippleAddress} public_key
- *  @returns {RippleAddress}
+ *  @param {Hex-encoded string|RadrAddress} public_key
+ *  @returns {RadrAddress}
  */
 Account._publicKeyToAddress = function(public_key) {
-  // Based on functions in /src/js/ripple/keypair.js
+  // Based on functions in /src/js/radr/keypair.js
   function hexToUInt160(public_key) {
     var bits = sjcl.codec.hex.toBits(public_key);
     var hash = sjcl.hash.ripemd160.hash(sjcl.hash.sha256.hash(bits));

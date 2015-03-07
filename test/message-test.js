@@ -1,8 +1,8 @@
 var assert  = require('assert');
-var sjcl    = require('ripple-lib').sjcl;
-var Message = require('ripple-lib').Message;
-var Seed    = require('ripple-lib').Seed;
-var Remote  = require('ripple-lib').Remote;
+var sjcl    = require('radr-lib').sjcl;
+var Message = require('radr-lib').Message;
+var Seed    = require('radr-lib').Seed;
+var Remote  = require('radr-lib').Remote;
 
 describe('Message', function(){
 
