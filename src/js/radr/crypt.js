@@ -153,7 +153,7 @@ Crypt.derive = function(opts, purpose, username, secret, fn) {
 };
 
 /**
- * Imported from ripple-client
+ * Imported from radr-client
  */
 
 
@@ -209,7 +209,7 @@ Crypt.decrypt = function (key, data) {
 
 
 /**
- * Validate a ripple address
+ * Validate a radr address
  *
  * @param {string} address
  */
@@ -238,7 +238,7 @@ Crypt.createMaster = function () {
 
 
 /**
- * Create a ripple address from a master key
+ * Create a radr address from a master key
  *
  * @param {string} masterkey
  */
@@ -291,7 +291,7 @@ Crypt.signString = function(secret, data) {
 Crypt.deriveRecoveryEncryptionKeyFromSecret = function(secret) {
   var seed = Seed.from_json(secret).to_bits();
   var hmac = new sjcl.misc.hmac(seed, sjcl.hash.sha512);
-  var key  = hmac.mac('ripple/hmac/recovery_encryption_key/v1');
+  var key  = hmac.mac('radr/hmac/recovery_encryption_key/v1');
   key      = sjcl.bitArray.bitSlice(key, 0, 256);
   return sjcl.codec.hex.fromBits(key);
 };

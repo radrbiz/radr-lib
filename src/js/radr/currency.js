@@ -80,9 +80,10 @@ Currency.prototype.parse_json = function(j, shouldInterpretXrpAsIou) {
 
         var currencyCode = matches[1];
 
+        // TODO: This must be updated to reflect VBC/VRP changes
         // for the currency 'XRP' case
         // we drop everything else that could have been provided
-        // e.g. 'XRP - Ripple'
+        // e.g. 'XRP - Radr'
         if (!currencyCode || /^(0|XRP)$/.test(currencyCode)) {
           this.parse_hex(shouldInterpretXrpAsIou ? Currency.HEX_CURRENCY_BAD : Currency.HEX_ZERO);
 

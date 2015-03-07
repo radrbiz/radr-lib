@@ -19,7 +19,7 @@
 *.o
 build/*.js
 tags
-bin/rippled
+bin/radrd
 Debug/*.*
 Release/*.*
 
@@ -35,7 +35,7 @@ db/*.db
 db/*.db-*
 
 # Ignore customized configs
-rippled.cfg
+radrd.cfg
 validators.txt
 test/config.js
 

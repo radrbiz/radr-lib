@@ -1,5 +1,5 @@
 var assert = require('assert');
-var sjcl   = require('ripple-lib').sjcl;
+var sjcl   = require('radr-lib').sjcl;
 
 function testExp(vec) {
   var actual = new sjcl.bn(vec.g).powermodMontgomery(new sjcl.bn(vec.e),

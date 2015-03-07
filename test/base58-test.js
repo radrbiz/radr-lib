@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Seed   = require('ripple-lib').Seed;
+var Seed   = require('radr-lib').Seed;
 
 describe('Base58', function() {
   describe('Seed', function() {

@@ -8,7 +8,7 @@ var Currency         = require('./amount').Currency;
 var UInt160          = require('./amount').UInt160;
 var Seed             = require('./seed').Seed;
 var SerializedObject = require('./serializedobject').SerializedObject;
-var RippleError      = require('./rippleerror').RippleError;
+var RadrError      = require('./radrerror').RadrError;
 var hashprefixes     = require('./hashprefixes');
 var config           = require('./config');
 var log              = require('./log').internal.sub('transaction');
@@ -294,11 +294,11 @@ Transaction.prototype._accountSecret = function(account) {
 /**
  * Returns the number of fee units this transaction will cost.
  *
- * Each Ripple transaction based on its type and makeup costs a certain number
+ * Each Radr transaction based on its type and makeup costs a certain number
  * of fee units. The fee units are calculated on a per-server basis based on the
  * current load on both the network and the server.
  *
- * @see https://ripple.com/wiki/Transaction_Fee
+ * @see https://radr.biz/wiki/Transaction_Fee
  *
  * @return {Number} Number of fee units for this transaction.
  */
@@ -367,7 +367,7 @@ Transaction.prototype._computeFee = function() {
 Transaction.prototype.complete = function() {
   if (this.remote) {
     if (!this.remote.trusted && !this.remote.local_signing) {
-      this.emit('error', new RippleError(
+      this.emit('error', new RadrError(
         'tejServerUntrusted', 'Attempt to give secret to untrusted server'));
       return false;
     }
@@ -375,7 +375,7 @@ Transaction.prototype.complete = function() {
 
   // Try to auto-fill the secret
   if (!this._secret && !(this._secret = this.getSecret())) {
-    this.emit('error', new RippleError('tejSecretUnknown', 'Missing secret'));
+    this.emit('error', new RadrError('tejSecretUnknown', 'Missing secret'));
     return false;
   }
 
@@ -385,7 +385,7 @@ Transaction.prototype.complete = function() {
       var key  = seed.get_key(this.tx_json.Account);
       this.tx_json.SigningPubKey = key.to_hex_pub();
     } catch(e) {
-      this.emit('error', new RippleError(
+      this.emit('error', new RadrError(
         'tejSecretInvalid', 'Invalid secret'));
       return false;
     }
@@ -396,14 +396,14 @@ Transaction.prototype.complete = function() {
   if (this.remote && typeof this.tx_json.Fee === 'undefined') {
     if (this.remote.local_fee || !this.remote.trusted) {
       if (!(this.tx_json.Fee = this._computeFee())) {
-        this.emit('error', new RippleError('tejUnconnected'));
+        this.emit('error', new RadrError('tejUnconnected'));
         return false;
       }
     }
   }
 
   if (Number(this.tx_json.Fee) > this._maxFee) {
-    this.emit('error', new RippleError(
+    this.emit('error', new RadrError(
       'tejMaxFeeExceeded', 'Max fee exceeded'));
     return false;
   }
@@ -795,7 +795,7 @@ Transaction.prototype.setFlags = function(flags) {
     if (transaction_flags.hasOwnProperty(flag)) {
       this.tx_json.Flags += transaction_flags[flag];
     } else {
-      return this.emit('error', new RippleError('tejInvalidFlag'));
+      return this.emit('error', new RadrError('tejInvalidFlag'));
     }
   }
 
@@ -1030,7 +1030,7 @@ Transaction.prototype.offerCreate = function(src, taker_pays, taker_gets, expira
  * If the RegularKey is set, the private key that corresponds to it can be
  * used to sign transactions instead of the master key
  *
- * The RegularKey must be a valid Ripple Address, or a Hash160 of the public
+ * The RegularKey must be a valid Radr Address, or a Hash160 of the public
  * key corresponding to the new private signing key.
  *
  * @param {String} account
@@ -1049,7 +1049,7 @@ Transaction.prototype.setRegularKey = function(src, regular_key) {
   }
 
   if (!UInt160.is_valid(regular_key)) {
-    throw new Error('RegularKey must be a valid Ripple Address');
+    throw new Error('RegularKey must be a valid Radr Address');
   }
 
   this.tx_json.TransactionType = 'SetRegularKey';
@@ -1155,8 +1155,8 @@ Transaction.prototype.submit = function(callback) {
   this.callback = (typeof callback === 'function') ? callback : function(){};
 
   this._errorHandler = function transactionError(error, message) {
-    if (!(error instanceof RippleError)) {
-      error = new RippleError(error, message);
+    if (!(error instanceof RadrError)) {
+      error = new RadrError(error, message);
     }
     self.callback(error);
   };
@@ -1177,7 +1177,7 @@ Transaction.prototype.submit = function(callback) {
 
 Transaction.prototype.abort = function() {
   if (!this.finalized) {
-    this.emit('error', new RippleError('tejAbort', 'Transaction aborted'));
+    this.emit('error', new RadrError('tejAbort', 'Transaction aborted'));
   }
 };
 

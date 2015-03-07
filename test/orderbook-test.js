@@ -1,8 +1,8 @@
 var assert = require('assert-diff');
-var Remote  = require('ripple-lib').Remote;
-var Currency = require('ripple-lib').Currency;
-var Amount = require('ripple-lib').Amount;
-var Meta = require('ripple-lib').Meta;
+var Remote  = require('radr-lib').Remote;
+var Currency = require('radr-lib').Currency;
+var Amount = require('radr-lib').Amount;
+var Meta = require('radr-lib').Meta;
 
 describe('OrderBook', function() {
   it('toJSON', function() {

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var RangeSet = require('ripple-lib').RangeSet;
+var RangeSet = require('radr-lib').RangeSet;
 
 describe('RangeSet', function() {
   it('add()', function() {

@@ -1,12 +1,14 @@
 var assert = require('assert');
-var Remote = require('ripple-lib').Remote;
-var Server = require('ripple-lib').Server;
-var Request = require('ripple-lib').Request;
-var Transaction = require('ripple-lib').Transaction;
-var UInt160 = require('ripple-lib').UInt160;
-var Currency = require('ripple-lib').Currency;
-var Amount = require('ripple-lib').Amount;
-var PathFind = require('../src/js/ripple/pathfind').PathFind;
+var Remote = require('radr-lib').Remote;
+var Server = require('radr-lib').Server;
+var Request = require('radr-lib').Request;
+var Transaction = require('radr-lib').Transaction;
+var UInt160 = require('radr-lib').UInt160;
+var Currency = require('radr-lib').Currency;
+var Amount = require('radr-lib').Amount;
+
+// this is not exported in the hierarchy, so we must reach in and get a direct reference
+var PathFind = require('radr-lib/src/js/radr/pathfind').PathFind;
 
 var options, remote, callback, database, tx;
 
@@ -21,45 +23,45 @@ describe('Remote', function() {
   beforeEach(function() {
     options = {
       trusted: true,
-      servers: [ 'wss://s1.ripple.com:443' ]
+      servers: [ 'wss://s1.radr.biz:443' ]
     };
     remote = new Remote(options);
   });
 
   it('Server initialization -- url object', function() {
     var remote = new Remote({
-      servers: [ { host: 's-west.ripple.com', port: 443, secure: true } ]
+      servers: [ { host: 's-west.radr.biz', port: 443, secure: true } ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url object -- no secure property', function() {
     var remote = new Remote({
-      servers: [ { host: 's-west.ripple.com', port: 443 } ]
+      servers: [ { host: 's-west.radr.biz', port: 443 } ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url object -- secure: false', function() {
     var remote = new Remote({
-      servers: [ { host: 's-west.ripple.com', port: 443, secure: false } ]
+      servers: [ { host: 's-west.radr.biz', port: 443, secure: false } ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'ws://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'ws://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url object -- string port', function() {
     var remote = new Remote({
-      servers: [ { host: 's-west.ripple.com', port: '443', secure: true } ]
+      servers: [ { host: 's-west.radr.biz', port: '443', secure: true } ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url object -- invalid host', function() {
@@ -75,7 +77,7 @@ describe('Remote', function() {
     assert.throws(
       function() {
         var remote = new Remote({
-          servers: [ { host: 's-west.ripple.com', port: null, secure: true } ]
+          servers: [ { host: 's-west.radr.biz', port: null, secure: true } ]
         });
       }, TypeError);
   });
@@ -84,27 +86,27 @@ describe('Remote', function() {
     assert.throws(
       function() {
         var remote = new Remote({
-          servers: [ { host: 's-west.ripple.com', port: 65537, secure: true } ]
+          servers: [ { host: 's-west.radr.biz', port: 65537, secure: true } ]
         });
       }, Error);
   });
 
   it('Server initialization -- url string', function() {
     var remote = new Remote({
-      servers: [ 'wss://s-west.ripple.com:443' ]
+      servers: [ 'wss://s-west.radr.biz:443' ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'wss://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url string -- ws://', function() {
     var remote = new Remote({
-      servers: [ 'ws://s-west.ripple.com:443' ]
+      servers: [ 'ws://s-west.radr.biz:443' ]
     });
     assert(Array.isArray(remote._servers));
     assert(remote._servers[0] instanceof Server);
-    assert.strictEqual(remote._servers[0]._url, 'ws://s-west.ripple.com:443');
+    assert.strictEqual(remote._servers[0]._url, 'ws://s-west.radr.biz:443');
   });
 
   it('Server initialization -- url string -- invalid host', function() {
@@ -121,7 +123,7 @@ describe('Remote', function() {
     assert.throws(
       function() {
         var remote = new Remote({
-          servers: [ 'ws://s-west.ripple.com:null' ]
+          servers: [ 'ws://s-west.radr.biz:null' ]
         });
       }, Error
     );
@@ -131,7 +133,7 @@ describe('Remote', function() {
     assert.throws(
       function() {
         var remote = new Remote({
-          servers: [ 'ws://s-west.ripple.com:65537:' ]
+          servers: [ 'ws://s-west.radr.biz:65537:' ]
         });
       }, Error
     );
@@ -404,7 +406,7 @@ describe('Remote', function() {
   });
 
   it('Add server', function() {
-    var server = remote.addServer('wss://s1.ripple.com:443');
+    var server = remote.addServer('wss://s1.radr.biz:443');
     assert(server instanceof Server);
 
     var i = 0;
@@ -424,7 +426,7 @@ describe('Remote', function() {
   });
   it('Add server -- primary server', function() {
     var server = remote.addServer({
-      host: 's1.ripple.com',
+      host: 's1.radr.biz',
       port: 443,
       secure: true,
       primary: true
@@ -450,7 +452,7 @@ describe('Remote', function() {
   });
 
   it('Connect', function() {
-    remote.addServer('wss://s1.ripple.com:443');
+    remote.addServer('wss://s1.radr.biz:443');
 
     var i = 0;
     remote._servers.forEach(function(s) {
@@ -464,7 +466,7 @@ describe('Remote', function() {
   });
 
   it('Connect -- with callback', function(done) {
-    remote.addServer('wss://s1.ripple.com:443');
+    remote.addServer('wss://s1.radr.biz:443');
 
     var i = 0;
     remote._servers.forEach(function(s) {
@@ -487,7 +489,7 @@ describe('Remote', function() {
   });
 
   it('Disconnect', function() {
-    remote.addServer('wss://s1.ripple.com:443');
+    remote.addServer('wss://s1.radr.biz:443');
 
     var i = 0;
     remote._servers.forEach(function(s) {
@@ -501,7 +503,7 @@ describe('Remote', function() {
     assert.strictEqual(i, 2, 'Did not attempt disconnect to all servers');
   });
   it('Disconnect -- with callback', function(done) {
-    remote.addServer('wss://s1.ripple.com:443');
+    remote.addServer('wss://s1.radr.biz:443');
 
     var i = 0;
     remote._servers.forEach(function(s) {
@@ -519,7 +521,7 @@ describe('Remote', function() {
     });
   });
   it('Disconnect -- unconnected', function(done) {
-    remote.addServer('wss://s1.ripple.com:443');
+    remote.addServer('wss://s1.radr.biz:443');
 
     var i = 0;
     remote._servers.forEach(function(s) {
@@ -727,7 +729,7 @@ describe('Remote', function() {
   });
 
   it('Get server', function() {
-    var server = remote.addServer('wss://sasdf.ripple.com:443');
+    var server = remote.addServer('wss://sasdf.radr.biz:443');
 
     remote.connect();
     remote._connected = true;
@@ -760,13 +762,13 @@ describe('Remote', function() {
     assert.strictEqual(new Remote().getServer(), null);
   });
   it('Get server -- no connected servers', function() {
-    var server = remote.addServer('wss://sasdf.ripple.com:443');
+    var server = remote.addServer('wss://sasdf.radr.biz:443');
     assert.strictEqual(remote._servers.length, 2);
     assert.strictEqual(remote.getServer(), null);
   });
   it('Get server -- primary server', function() {
     var server = remote.addServer({
-      host: 'sasdf.ripple.com',
+      host: 'sasdf.radr.biz',
       port: 443,
       secure: true,
       primary: true
@@ -912,7 +914,7 @@ describe('Remote', function() {
   });
   it('Initiate request -- set non-existent servers', function() {
     var request = remote.requestServerInfo();
-    request.setServer('wss://s-east.ripple.com:443');
+    request.setServer('wss://s-east.radr.biz:443');
     assert.strictEqual(request.server, null);
     assert.throws(function() {
       remote._connected = true;
@@ -1156,7 +1158,7 @@ describe('Remote', function() {
     });
   });
   it('Construct ping request -- with server', function() {
-    var request = remote.requestPing('wss://s1.ripple.com:443');
+    var request = remote.requestPing('wss://s1.radr.biz:443');
     assert.strictEqual(request.server, remote._servers[0]);
     assert.deepEqual(request.message, {
       command: 'ping',
@@ -1663,7 +1665,8 @@ describe('Remote', function() {
     });
   });
 
-  it('Construct ripple balance request', function() {
+  // TODO: This test should be updated to reflect VBC/VRP balances
+  it('Construct radr balance request', function() {
     var request = remote.requestRippleBalance({
       account: 'rGr9PjmVe7MqEXTSbd3njhgJc2s5vpHV54',
       issuer: 'rwxBjBC9fPzyQ9GgPZw6YYLNeRTSx5c2W6',

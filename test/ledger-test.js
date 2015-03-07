@@ -1,7 +1,7 @@
 var assert = require('assert');
 var fs     = require('fs');
 
-var Ledger = require('ripple-lib').Ledger;
+var Ledger = require('radr-lib').Ledger;
 
 /**
 * @param ledger_index {Number}

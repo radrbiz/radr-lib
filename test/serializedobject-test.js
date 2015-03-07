@@ -1,6 +1,6 @@
 var assert           = require('assert');
-var SerializedObject = require('ripple-lib').SerializedObject;
-var sjcl             = require('ripple-lib').sjcl;
+var SerializedObject = require('radr-lib').SerializedObject;
+var sjcl             = require('radr-lib').sjcl;
 
 // Shortcuts
 var hex = sjcl.codec.hex;
@@ -88,7 +88,7 @@ describe('Serialized object', function() {
 
     describe('Format validation', function() {
       // Peercover actually had a problem submitting transactions without a `Fee`
-      // and rippled was only informing of "transaction is invalid"
+      // and radrd was only informing of "transaction is invalid"
       it('should throw an Error when there is a missing field', function() {
         var input_json = {
           Account: 'r4qLSAzv4LZ9TLsR7diphGwKnSEAMQTSjS',

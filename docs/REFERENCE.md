@@ -17,17 +17,17 @@ __(More examples coming soon!)__
 
 ###Also see:
 
-1. [The ripple-lib README](../README.md)
-2. [The ripple-lib GUIDES](GUIDES.md)a
+1. [The radr-lib README](../README.md)
+2. [The radr-lib GUIDES](GUIDES.md)a
 
 #Remote options
 
 ```js
-/* Loading ripple-lib with Node.js */
-var Remote = require('ripple-lib').Remote;
+/* Loading radr-lib with Node.js */
+var Remote = require('radr-lib').Remote;
 
-/* Loading ripple-lib in a webpage */
-// var Remote = ripple.Remote;
+/* Loading radr-lib in a webpage */
+// var Remote = radr.Remote;
 
 var options = { };
 
@@ -68,62 +68,62 @@ If the method is camelCased and starts with `request`, it's a helper method that
 
 ##Server requests
 
-**[requestServerInfo([callback])](https://ripple.com/wiki/JSON_Messages#server_info)**
+**[requestServerInfo([callback])](https://radr.biz/wiki/JSON_Messages#server_info)**
 
 Returns information about the state of the server. If you are connected to multiple servers and want to select by a particular host, use `request.setServer`. Example:
 
 ```js
 var request = remote.requestServerInfo();
 
-request.setServer('wss://s1.ripple.com');
+request.setServer('wss://s1.radr.biz');
 
 request.request(function(err, res) {
 
 });
 ```
-**[requestPeers([callback])](https://ripple.com/wiki/JSON_Messages#peers)**
+**[requestPeers([callback])](https://radr.biz/wiki/JSON_Messages#peers)**
 
-**[requestConnect(ip, port, [callback])](https://ripple.com/wiki/JSON_Messages#connect)**
+**[requestConnect(ip, port, [callback])](https://radr.biz/wiki/JSON_Messages#connect)**
 
-**[unl_list([callback])](https://ripple.com/wiki/JSON_Messages#unl_list)**
+**[unl_list([callback])](https://radr.biz/wiki/JSON_Messages#unl_list)**
 
 ```js
 var request = remote.request('un_list');
 
-request.setServer('wss://s1.ripple.com');
+request.setServer('wss://s1.radr.biz');
 
 request.request(function(err, res) {
 
 });
 ```
 
-**[unl_add(addr, comment, [callback])](https://ripple.com/wiki/JSON_Messages#unl_add)**
+**[unl_add(addr, comment, [callback])](https://radr.biz/wiki/JSON_Messages#unl_add)**
 
-**[unl_delete(node, [callback])](https://ripple.com/wiki/JSON_Messages#unl_delete)**
+**[unl_delete(node, [callback])](https://radr.biz/wiki/JSON_Messages#unl_delete)**
 
 
 
 ##Ledger requests
 
-**[requestLedger([opts], [callback])](https://ripple.com/wiki/JSON_Messages#ledger)**
+**[requestLedger([opts], [callback])](https://radr.biz/wiki/JSON_Messages#ledger)**
 
-**[requestLedgerHeader([callback])](https://wiki.ripple.com/JSON_Messages#ledger_data)**
+**[requestLedgerHeader([callback])](https://wiki.radr.biz/JSON_Messages#ledger_data)**
 
-**[requestLedgerCurrent([callback])](https://ripple.com/wiki/JSON_Messages#ledger_current)**
+**[requestLedgerCurrent([callback])](https://radr.biz/wiki/JSON_Messages#ledger_current)**
 
-**[requestLedgerEntry(type, [callback])](https://ripple.com/wiki/JSON_Messages#ledger_entry)**
+**[requestLedgerEntry(type, [callback])](https://radr.biz/wiki/JSON_Messages#ledger_entry)**
 
-**[requestSubscribe([streams], [callback])](https://ripple.com/wiki/JSON_Messages#subscribe)**
+**[requestSubscribe([streams], [callback])](https://radr.biz/wiki/JSON_Messages#subscribe)**
 
 Start receiving selected streams from the server.
 
-**[requestUnsubscribe([streams], [callback])](https://ripple.com/wiki/JSON_Messages#unsubscribe)**
+**[requestUnsubscribe([streams], [callback])](https://radr.biz/wiki/JSON_Messages#unsubscribe)**
 
 Stop receiving selected streams from the server.
 
 ##Account requests
 
-**[requestAccountInfo(options, [callback])](https://ripple.com/wiki/JSON_Messages#account_info)**
+**[requestAccountInfo(options, [callback])](https://radr.biz/wiki/JSON_Messages#account_info)**
 
 Return information about the specified account.
 
@@ -155,9 +155,9 @@ var request = remote.requestAccountInfo(options, function(err, info) {
 }
 ```
 
-**[requestAccountLines(options, [callback])](https://ripple.com/wiki/JSON_Messages#account_lines)**
+**[requestAccountLines(options, [callback])](https://radr.biz/wiki/JSON_Messages#account_lines)**
 
-**[requestAccountOffers(options, [callback])](https://ripple.com/wiki/JSON_Messages#account_offers)**
+**[requestAccountOffers(options, [callback])](https://radr.biz/wiki/JSON_Messages#account_offers)**
 
 Return the specified account's outstanding offers.
 
@@ -168,7 +168,7 @@ The responses can be paged through by using the `marker`.
 // A valid `ledger_index` or `ledger_hash` is required to provide a reliable result.
 // Results can change between ledger closes, so the provided ledger will be used as base.
 var options = {
-    account: < rippleAccount >,
+    account: < radrAccount >,
     limit: < Number between 10 and 400 >,
     ledger: < valid ledger_index or ledger_hash >
 }
@@ -183,7 +183,7 @@ var request = remote.requestAccountOffers(options);
 ```
 
 
-**[requestAccountTransactions(options, [callback])](https://ripple.com/wiki/JSON_Messages#account_tx)**
+**[requestAccountTransactions(options, [callback])](https://radr.biz/wiki/JSON_Messages#account_tx)**
 
 Fetch a list of transactions that applied to this account.
 
@@ -201,13 +201,13 @@ Options:
 + `fwd_marker`
 + `rev_marker`
 
-**[requestWalletAccounts(seed, [callback])](https://ripple.com/wiki/JSON_Messages#wallet_accounts)**
+**[requestWalletAccounts(seed, [callback])](https://radr.biz/wiki/JSON_Messages#wallet_accounts)**
 
 Return a list of accounts for a wallet. *Requires trusted remote*
 
 **requestAccountBalance(account, [ledger], [callback])**
 
-Get the balance for an account. Returns an [Amount](https://github.com/ripple/ripple-lib/blob/develop/src/js/ripple/amount.js) object.
+Get the balance for an account. Returns an [Amount](https://github.com/radr/radr-lib/blob/develop/src/js/radr/amount.js) object.
 
 **requestAccountFlags(account, [ledger], [callback])**
 
@@ -217,13 +217,13 @@ Return the flags for an account.
 
 Return the owner count for an account.
 
-**requestRippleBalance(account, issuer, currency, [ledger], [callback])**
+**requestRadrBalance(account, issuer, currency, [ledger], [callback])**
 
-Return a request to get a ripple balance
+Return a request to get a radr balance
 
 ##Orderbook requests
 
-**[requestBookOffers(options, [callback])](https://ripple.com/wiki/JSON_Messages#book_offers)**
+**[requestBookOffers(options, [callback])](https://radr.biz/wiki/JSON_Messages#book_offers)**
 
 Return the offers for an order book, also called a *snapshot*
 
@@ -249,23 +249,23 @@ request.request(function(err, offers) {
 
 ##Transaction requests
 
-**[requestTransactionEntry(hash, [ledger_hash], [callback])](https://ripple.com/wiki/JSON_Messages#transaction_entry)**
+**[requestTransactionEntry(hash, [ledger_hash], [callback])](https://radr.biz/wiki/JSON_Messages#transaction_entry)**
 
 Searches a particular ledger for a transaction hash. Default ledger is the open ledger.
 
-**[requestTransaction(hash, [callback])](https://ripple.com/wiki/JSON_Messages#tx)**
+**[requestTransaction(hash, [callback])](https://radr.biz/wiki/JSON_Messages#tx)**
 
 Searches ledger history for validated transaction hashes.
 
-**[requestSign(secret, tx_json, [callback])](https://ripple.com/wiki/JSON_Messages#sign)**
+**[requestSign(secret, tx_json, [callback])](https://radr.biz/wiki/JSON_Messages#sign)**
 
 Sign a transaction. *Requires trusted remote*
 
-**[requestSubmit([callback])](https://ripple.com/wiki/JSON_Messages#submit)**
+**[requestSubmit([callback])](https://radr.biz/wiki/JSON_Messages#submit)**
 
 Submit a transaction to the network. This command is used internally to submit transactions with a greater degree of reliability. See [Submitting a payment to the network](GUIDES.md#3-submitting-a-payment-to-the-network) for details.
 
-**[pathFind(src_account, dst_account, dst_amount, src_currencies)](https://ripple.com/wiki/JSON_Messages#path_find)**
+**[pathFind(src_account, dst_account, dst_amount, src_currencies)](https://radr.biz/wiki/JSON_Messages#path_find)**
 
 #Transaction constructors
 
@@ -312,7 +312,7 @@ var transaction = remote.createTransaction('OfferCreate', {
 
 ##Transaction events
 
-[Transaction](https://github.com/ripple/ripple-lib/blob/develop/src/js/ripple/transaction.js) objects are EventEmitters. They may emit the following events.
+[Transaction](https://github.com/radr/radr-lib/blob/develop/src/js/radr/transaction.js) objects are EventEmitters. They may emit the following events.
 
 + `final` Transaction has erred or succeeded. This event indicates that the transaction has finished processing.
 + `error` Transaction has erred. This event is a final state.

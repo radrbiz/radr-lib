@@ -1,4 +1,4 @@
-// Interface to manage connections to rippled servers
+// Interface to manage connections to radrd servers
 //
 // - We never send binary data.
 // - We use the W3C interface for node and browser compatibility:
@@ -30,7 +30,7 @@ var Meta = require('./meta').Meta;
 var OrderBook = require('./orderbook').OrderBook;
 var PathFind = require('./pathfind').PathFind;
 var SerializedObject = require('./serializedobject').SerializedObject;
-var RippleError = require('./rippleerror').RippleError;
+var RadrError = require('./radrerror').RadrError;
 var utils = require('./utils');
 var sjcl = require('./utils').sjcl;
 var hashprefixes = require('./hashprefixes');
@@ -38,7 +38,7 @@ var config = require('./config');
 var log = require('./log').internal.sub('remote');
 
 /**
- * Interface to manage connections to rippled servers
+ * Interface to manage connections to radrd servers
  *
  * @param {Object} Options
  */
@@ -425,7 +425,7 @@ Remote.prototype.addServer = function(opts) {
 };
 
 /**
- * Reconnect to Ripple network
+ * Reconnect to Radr network
  */
 
 Remote.prototype.reconnect = function() {
@@ -443,7 +443,7 @@ Remote.prototype.reconnect = function() {
 };
 
 /**
- * Connect to the Ripple network
+ * Connect to the Radr network
  *
  * @param {Function} callback
  * @api public
@@ -468,7 +468,7 @@ Remote.prototype.connect = function(callback) {
 };
 
 /**
- * Disconnect from the Ripple network.
+ * Disconnect from the Radr network.
  *
  * @param {Function} callback
  * @api public
@@ -518,7 +518,7 @@ Remote.prototype._handleMessage = function(message, server) {
 
   if (!Remote.isValidMessage(message)) {
     // Unexpected response from remote.
-    this.emit('error', new RippleError('remoteUnexpected',
+    this.emit('error', new RadrError('remoteUnexpected',
       'Unexpected response from remote'));
     return;
   }
@@ -936,7 +936,7 @@ Remote.prototype.requestLedgerCurrent = function(callback) {
  * Get the contents of a specified ledger
  *
  * @param {Object} options
- * @property {Boolean} [options.binary]       - Flag which determines if rippled returns binary or parsed JSON
+ * @property {Boolean} [options.binary]       - Flag which determines if radrd returns binary or parsed JSON
  * @property {String|Number} [options.ledger] - Hash or sequence of a ledger to get contents for
  * @property {Number} [options.limit]         - Number of contents to retrieve from the ledger
  * @property {Function} callback
@@ -1151,7 +1151,7 @@ Remote.prototype.requestTransactionEntry = function(hash, ledgerHash, callback) 
  *
  * @param {Object|String} hash
  * @property {String} hash.hash           - Transaction hash
- * @property {Boolean} [hash.binary=true] - Flag which determines if rippled returns binary or parsed JSON
+ * @property {Boolean} [hash.binary=true] - Flag which determines if radrd returns binary or parsed JSON
  * @param [Function] callback
  * @return {Request} request
  */
@@ -1191,16 +1191,16 @@ Remote.prototype.requestTx = function(hash, callback) {
  * Account Request
  *
  * Optional paging with limit and marker options
- * supported in rippled for 'account_lines' and 'account_offers'
+ * supported in radrd for 'account_lines' and 'account_offers'
  *
  * The paged responses aren't guaranteed to be reliable between
  * ledger closes. You have to supply a ledger_index or ledger_hash
  * when paging to ensure a complete response
  *
  * @param {String} type - request name, e.g. 'account_lines'
- * @param {String} account - ripple address
+ * @param {String} account - radr address
  * @param {Object} options - all optional
- *   @param {String} peer - ripple address
+ *   @param {String} peer - radr address
  *   @param [String|Number] ledger identifier
  *   @param [Number] limit - max results per response
  *   @param {String} marker - start position in response paging
@@ -1280,8 +1280,8 @@ Remote.accountRequest = function(type, options, callback) {
  * Request account_info
  *
  * @param {Object} options
- *   @param {String} account - ripple address
- *   @param {String} peer - ripple address
+ *   @param {String} account - radr address
+ *   @param {String} peer - radr address
  *   @param [String|Number] ledger identifier
  * @param [Function] callback
  * @return {Request}
@@ -1296,8 +1296,8 @@ Remote.prototype.requestAccountInfo = function() {
  * Request account_currencies
  *
  * @param {Object} options
- *   @param {String} account - ripple address
- *   @param {String} peer - ripple address
+ *   @param {String} account - radr address
+ *   @param {String} peer - radr address
  *   @param [String|Number] ledger identifier
  * @param [Function] callback
  * @return {Request}
@@ -1319,8 +1319,8 @@ Remote.prototype.requestAccountCurrencies = function() {
  * when paging to ensure a complete response
  *
  * @param {Object} options
- *   @param {String} account - ripple address
- *   @param {String} peer - ripple address
+ *   @param {String} account - radr address
+ *   @param {String} peer - radr address
  *   @param [String|Number] ledger identifier
  *   @param [Number] limit - max results per response
  *   @param {String} marker - start position in response paging
@@ -1346,7 +1346,7 @@ Remote.prototype.requestAccountLines = function() {
  * when paging to ensure a complete response
  *
  * @param {Object} options
- *   @param {String} account - ripple address
+ *   @param {String} account - radr address
  *   @param [String|Number] ledger identifier
  *   @param [Number] limit - max results per response
  *   @param {String} marker - start position in response paging
@@ -1776,7 +1776,7 @@ Remote.prototype._serverPrepareSubscribe = function(server, callback) {
 Remote.prototype.ledgerAccept =
 Remote.prototype.requestLedgerAccept = function(callback) {
   if (!this._stand_alone) {
-    this.emit('error', new RippleError('notStandAlone'));
+    this.emit('error', new RadrError('notStandAlone'));
     return;
   }
 
@@ -2173,6 +2173,7 @@ Remote.prototype.requestOffer = function(options, callback) {
 /**
  * Get an account's balance
  *
+ * TODO: This should be updated to reflect VBC/VRP balances
  * @param {String} account
  * @param [String] issuer
  * @param [String] currency
