@@ -315,10 +315,14 @@ exports.ledger = {
     ['AccountTxnID',       OPTIONAL],
     ['WalletLocator',      OPTIONAL],
     ['Balance',            REQUIRED],
+    ['BalanceVBC',         REQUIRED],
     ['MessageKey',         OPTIONAL],
     ['Domain',             OPTIONAL],
     ['Account',            REQUIRED],
-    ['RegularKey',         OPTIONAL]]),
+    ['RegularKey',         OPTIONAL],
+    ['Referee',            OPTIONAL],
+    ['Refrences',          OPTIONAL],
+    ['ReferenceHeight',    OPTIONAL]]),
   Contract: [99].concat(sleBase,[
     ['PreviousTxnLgrSeq',  REQUIRED],
     ['Expiration',         REQUIRED],
@@ -343,6 +347,14 @@ exports.ledger = {
     ['TakerGetsCurrency',  OPTIONAL],
     ['TakerGetsIssuer',    OPTIONAL],
     ['Indexes',            REQUIRED]]),
+  Dividend: [68].concat(sleBase,[
+    ['DividendState',     REQUIRED],
+    ['DividendLedger',    REQUIRED],
+    ['DividendCoins',     REQUIRED],
+    ['DividendCoinsVBC',  REQUIRED],
+    ['DividendVRank',     OPTIONAL],
+    ['DividendVSprd',     OPTIONAL],
+    ['DividendResultHash',OPTIONAL]]),
   EnabledFeatures: [102].concat(sleBase,[
     ['Features',           REQUIRED]]),
   FeeSettings: [115].concat(sleBase,[
@@ -380,6 +392,9 @@ exports.ledger = {
     ['TakerPays',           REQUIRED],
     ['TakerGets',           REQUIRED],
     ['Account',             REQUIRED]]),
+  Refer: [82].concat(sleBase,[
+    ['Reference',           REQUIRED],
+    ['Referee',             REQUIRED]]),
   RippleState: [114].concat(sleBase,[
     ['LedgerEntryType',     REQUIRED],
     ['Flags',               REQUIRED],

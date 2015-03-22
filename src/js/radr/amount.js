@@ -63,7 +63,8 @@ var consts = {
   min_value:         '-1000000000000000e-96'
 };
 
-var MAX_XRP_VALUE = new BigNumber(1e11);
+// TODO: MAX_VRP_VALUE should be set to something from the SPEC and not a guess
+var MAX_VRP_VALUE = new BigNumber(1e16);
 var MAX_IOU_VALUE = new BigNumber(consts.max_value);
 var MIN_IOU_VALUE = (new BigNumber(consts.min_value)).abs();
 
@@ -349,8 +350,8 @@ Amount.prototype._check_limits = function() {
   }
   var absval = this._value.absoluteValue();
   if (this._is_native) {
-    if (absval.greaterThan(MAX_XRP_VALUE)) {
-      throw new Error('Exceeding max value of ' + MAX_XRP_VALUE.toString());
+    if (absval.greaterThan(MAX_VRP_VALUE)) {
+      throw new Error('Exceeding max value of ' + MAX_VRP_VALUE.toString());
     }
   } else {
     if (absval.lessThan(MIN_IOU_VALUE)) {
