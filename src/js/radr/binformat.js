@@ -272,6 +272,23 @@ exports.tx = {
     [ 'InvoiceID'          , OPTIONAL ],
     [ 'DestinationTag'     , OPTIONAL ]
   ]),
+  Dividend: [181].concat(base, [
+    [ 'DividendType'       , REQUIRED ],
+    [ 'DividendLedger'     , REQUIRED ],
+    [ 'Destination'        , OPTIONAL ],
+    [ 'DividendCoins'      , REQUIRED ],
+    [ 'DividendCoinsVBC'   , REQUIRED ],
+    [ 'DividendCoinsVBCRank', OPTIONAL ],
+    [ 'DividendCoinsVBCSprd', OPTIONAL ],
+    [ 'DividendVRank'      , OPTIONAL ],
+    [ 'DividendVSprd'      , OPTIONAL ],
+    [ 'DividendTSprd'      , OPTIONAL ],
+    [ 'DividendResultHash' , OPTIONAL ]
+  ]),
+  AddReferee: [182].concat(base, [
+    [ 'Destination'        , REQUIRED ],
+    [ 'Amount'             , OPTIONAL ]
+  ]),
   Contract: [9].concat(base, [
     [ 'Expiration'         , REQUIRED ],
     [ 'BondAmount'         , REQUIRED ],
