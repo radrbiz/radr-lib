@@ -8,7 +8,7 @@ var Float = require('./ieee754').Float;
 //
 
 var Currency = extend(function() {
-  // Internal form: 0 = XRP. 3 letter-code.
+  // Internal form: 0 = VRP. 255 = VBC. 3 letter-code.
   // XXX Internal should be 0 or hex with three letter annotation when valid.
 
   // Json form:
@@ -81,13 +81,20 @@ Currency.prototype.parse_json = function(j, shouldInterpretXrpAsIou) {
         var currencyCode = matches[1];
 
         // TODO: This must be updated to reflect VBC/VRP changes
-        // for the currency 'XRP' case
+        // for the currency 'VRP' case
         // we drop everything else that could have been provided
-        // e.g. 'XRP - Radr'
-        if (!currencyCode || /^(0|XRP)$/.test(currencyCode)) {
+        // e.g. 'VRP - Radr'
+        if (!currencyCode || /^(0|VRP)$/.test(currencyCode)) {
           this.parse_hex(shouldInterpretXrpAsIou ? Currency.HEX_CURRENCY_BAD : Currency.HEX_ZERO);
 
-          // early break, we can't have interest on XRP
+          // early break, we can't have interest on VRP/VBC
+          break;
+        }
+
+        if (!currencyCode || /^(VBC)$/.test(currencyCode)) {
+          this.parse_hex(shouldInterpretXrpAsIou ? Currency.HEX_CURRENCY_BAD : Currency.HEX_TWOFIFTYFIVE);
+
+          // early break, we can't have interest on VRP/VBC
           break;
         }
 
@@ -184,7 +191,7 @@ Currency.prototype._update = function() {
   var isZeroExceptInStandardPositions = true;
 
   if (!bytes) {
-    return 'XRP';
+    return 'VRP';
   }
 
   this._native = false;
@@ -204,10 +211,17 @@ Currency.prototype._update = function() {
 
     if (this._iso_code === '\0\0\0') {
       this._native = true;
-      this._iso_code = 'XRP';
+      this._iso_code = 'VRP';
     }
 
     this._type = 0;
+  } else if (bytes[0] === 0xFF) { // VBC currency
+
+    this._native = true;
+    this._iso_code = 'VBC';
+
+    this._type = 255;
+
   } else if (bytes[0] === 0x01) { // Demurrage currency
     this._iso_code = String.fromCharCode(bytes[1])
                    + String.fromCharCode(bytes[2])
@@ -315,7 +329,7 @@ Currency.prototype.get_interest_percentage_at = function(referenceDate, decimals
 Currency.prototype.to_json = function(opts) {
   if (!this.is_valid()) {
     // XXX This is backwards compatible behavior, but probably not very good.
-    return 'XRP';
+    return 'VRP';
   }
 
   var opts = opts || {};

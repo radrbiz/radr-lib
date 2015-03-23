@@ -28,13 +28,14 @@ function Amount() {
   //  { 'value' : ..., 'currency' : ..., 'issuer' : ...}
 
   this._value       = new BigNumber(NaN);
-  this._is_native   = true; // Default to XRP. Only valid if value is not NaN.
+  this._is_native   = true; // Default to VRP/VBC. Only valid if value is not NaN.
   this._currency    = new Currency();
   this._issuer      = new UInt160();
 }
 
 var consts = {
   currency_xns:      0,
+  currency_xns_vbc:  255, // 0xFF
   currency_one:      1,
   xns_precision:     6,
 
@@ -483,7 +484,7 @@ Amount.prototype.parse_human = function(j, opts) {
   if (words.length === 1) {
     if (isNumber(words[0])) {
       value = words[0];
-      currency = 'XRP';
+      currency = 'VRP';
     } else {
       value = words[0].slice(0, -3);
       currency = words[0].slice(-3);
@@ -510,7 +511,7 @@ Amount.prototype.parse_human = function(j, opts) {
 
   currency = currency.toUpperCase();
   this.set_currency(currency);
-  this._is_native = (currency === 'XRP');
+  this._is_native = (currency === 'VRP' || currency === 'VBC');
   this._set_value(new BigNumber(value));
 
   // Apply interest/demurrage
@@ -576,8 +577,8 @@ Amount.prototype.parse_quality = function(quality, counterCurrency, counterIssue
   this._issuer      = UInt160.from_json(counterIssuer);
   this._is_native   = this._currency.is_native();
 
-  if (this._is_native && baseCurrency.is_native()) {
-    throw new Error('XRP/XRP quality is not allowed');
+  if ((this._is_native && baseCurrency.is_native()) && (this._currency.get_iso() && baseCurrency.get_iso())) {
+    throw new Error('VRP/VRP or VBC/VBC quality is not allowed');
   }
 
   /*
@@ -642,10 +643,13 @@ Amount.prototype.parse_json = function(j) {
         this._currency  = Currency.from_json(m[2]);
         if (m[3]) {
           this._issuer  = UInt160.from_json(m[3]);
+        } else if(m[3] === 'VBC') { // native VBC
+          this._issuer  = UInt160.from_json(Currency.HEX_TWOFIFTYFIVE);
+          this.parse_native(j);
         } else {
           this._issuer  = UInt160.from_json('1');
+          this.parse_value(m[1]);
         }
-        this.parse_value(m[1]);
       } else {
         this.parse_native(j);
         this._currency  = Currency.from_json('0');
@@ -930,7 +934,7 @@ Amount.prototype.to_text_full = function(opts) {
     return 'NaN';
   }
   return this._is_native
-      ? this.to_human() + '/XRP'
+      ? this.to_human() + '/' + this._currency.to_json()
       : this.to_text() + '/' + this._currency.to_json()
         + '/' + this._issuer.to_json(opts);
 };
@@ -950,7 +954,7 @@ Amount.prototype.not_equals_why = function(d, ignore_issuer) {
     return 'Native mismatch.';
   }
 
-  var type = this._is_native ? 'XRP' : 'Non-XRP';
+  var type = this._is_native ? 'VRP/VBC' : 'Non-VRP/VBC';
   if (!this._value.isZero() && this._value.negated().equals(d._value)) {
     return type + ' sign differs.';
   }
@@ -959,10 +963,10 @@ Amount.prototype.not_equals_why = function(d, ignore_issuer) {
   }
   if (!this._is_native) {
     if (!this._currency.equals(d._currency)) {
-      return 'Non-XRP currency differs.';
+      return 'Non-VRP/VBC currency differs.';
     }
     if (!ignore_issuer && !this._issuer.equals(d._issuer)) {
-      return 'Non-XRP issuer differs: ' + d._issuer.to_json() + '/' + this._issuer.to_json();
+      return 'Non-VRP/VBC issuer differs: ' + d._issuer.to_json() + '/' + this._issuer.to_json();
     }
   }
 };

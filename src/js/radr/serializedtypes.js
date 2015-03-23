@@ -389,9 +389,16 @@ var STAmount = exports.Amount = new SerializedType({
       //native
       var integer_bytes = value_bytes.slice();
       integer_bytes[0] &= 0x3f;
+
+      var native_vrp = (integer_bytes[0] == 32);
+
+      if(native_vrp){
+        integer_bytes[0] = 0; //clear VBC amount encoded, pass notion of VBC through /VBC in Amount#from_json
+      }
+
       var integer_hex = utils.arrayToHex(integer_bytes);
       var value = new BigNumber(integer_hex, 16);
-      return Amount.from_json((is_negative ? '-' : '') + value.toString());
+      return Amount.from_json((is_negative ? '-' : '') + value.toString() + (native_vrp ? '' : '/VBC'));
     }
   }
 });

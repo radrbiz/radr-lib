@@ -21,10 +21,13 @@ UInt160.prototype.constructor = UInt160;
 
 var ACCOUNT_ZERO = UInt160.ACCOUNT_ZERO = 'rrrrrrrrrrrrrrrrrrrrrhoLvTp';
 var ACCOUNT_ONE  = UInt160.ACCOUNT_ONE  = 'rrrrrrrrrrrrrrrrrrrrBZbvji';
+var ACCOUNT_TWOFIFTYFIVE = UInt160.ACCOUNT_TWOFIFTYFIVE = 'rrrrrrrrrrrrrrrrrrrrVFngv46';
 var HEX_ZERO     = UInt160.HEX_ZERO     = '0000000000000000000000000000000000000000';
 var HEX_ONE      = UInt160.HEX_ONE      = '0000000000000000000000000000000000000001';
+var HEX_TWOFIFTYFIVE = UInt160.HEX_TWOFIFTYFIVE = '00000000000000000000000000000000000000FF';
 var STR_ZERO     = UInt160.STR_ZERO     = utils.hexToString(HEX_ZERO);
 var STR_ONE      = UInt160.STR_ONE      = utils.hexToString(HEX_ONE);
+var STR_TWOFIFTYFIVE      = UInt160.STR_TWOFIFTYFIVE      = utils.hexToString(HEX_TWOFIFTYFIVE);
 
 UInt160.prototype.set_version = function(j) {
   this._version_byte = j;
