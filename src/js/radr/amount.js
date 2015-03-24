@@ -643,10 +643,14 @@ Amount.prototype.parse_json = function(j) {
         this._currency  = Currency.from_json(m[2]);
         if (m[3]) {
           this._issuer  = UInt160.from_json(m[3]);
-        } else if(m[3] === 'VBC') { // native VBC
-          this.parse_native(j);
-          this._currency  = Currency.from_json(UInt160.HEX_TWOFIFTYFIVE);
-          this._issuer    = UInt160.from_json(UInt160.HEX_TWOFIFTYFIVE);
+        } else if(m[2] === 'VBC') { // native VBC
+          this.parse_native(m[1]);
+          this._currency = Currency.from_json(UInt160.HEX_TWOFIFTYFIVE);
+          this._issuer = UInt160.from_json(UInt160.HEX_TWOFIFTYFIVE);
+        } else if(m[2] === 'VRP') { // native VRP
+          this.parse_native(m[1]);
+          this._currency = Currency.from_json('0');
+          this._issuer = UInt160.from_json('0');
         } else {
           this._issuer  = UInt160.from_json('1');
           this.parse_value(m[1]);
