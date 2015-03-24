@@ -743,7 +743,7 @@ Amount.prototype.to_text = function() {
   }
 
   if (this._is_native) {
-    return this._value.times(Amount.bi_xns_unit).toString()+'/'+this._currency.to_json();
+    return this._value.times(Amount.bi_xns_unit).toString();
   }
 
   // not native
