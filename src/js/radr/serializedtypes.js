@@ -402,7 +402,7 @@ var STAmount = exports.Amount = new SerializedType({
 
       var integer_hex = utils.arrayToHex(integer_bytes);
       var value = new BigNumber(integer_hex, 16);
-      return Amount.from_json((is_negative ? '-' : '') + value.toString() + (native_vbc ? '/VBC' : '/VRP'));
+      return Amount.from_json((is_negative ? '-' : '') + value.toString() + (native_vbc ? '/VBC' : ''));
     }
   }
 });

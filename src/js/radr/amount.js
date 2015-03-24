@@ -647,10 +647,6 @@ Amount.prototype.parse_json = function(j) {
           this.parse_native(m[1]);
           this._currency = Currency.from_json(UInt160.HEX_TWOFIFTYFIVE);
           this._issuer = UInt160.from_json(UInt160.HEX_TWOFIFTYFIVE);
-        } else if(m[2] === 'VRP') { // native VRP
-          this.parse_native(m[1]);
-          this._currency = Currency.from_json('0');
-          this._issuer = UInt160.from_json('0');
         } else {
           this._issuer  = UInt160.from_json('1');
           this.parse_value(m[1]);
@@ -747,7 +743,7 @@ Amount.prototype.to_text = function() {
   }
 
   if (this._is_native) {
-    return this._value.times(Amount.bi_xns_unit).toString();
+    return this._value.times(Amount.bi_xns_unit).toString()+'/'+this._currency.to_json();
   }
 
   // not native
@@ -919,19 +915,16 @@ Amount.prototype.to_human_full = function(opts) {
 };
 
 Amount.prototype.to_json = function() {
-  if (this._is_native) {
-    return this.to_text();
-  } else {
-    var amount_json = {
-      value : this.to_text(),
-      currency : this._currency.has_interest() ?
-        this._currency.to_hex() : this._currency.to_json()
-    };
-    if (this._issuer.is_valid()) {
-      amount_json.issuer = this._issuer.to_json();
-    }
-    return amount_json;
+  var amount_json = {
+    value: this.to_text(),
+    currency: this._currency.has_interest() ?
+      this._currency.to_hex() : this._currency.to_json(),
+    issuer: ''
+  };
+  if (this._issuer.is_valid()) {
+    amount_json.issuer = this._issuer.to_json();
   }
+  return amount_json;
 };
 
 Amount.prototype.to_text_full = function(opts) {
@@ -939,7 +932,7 @@ Amount.prototype.to_text_full = function(opts) {
     return 'NaN';
   }
   return this._is_native
-      ? this.to_human() + '/' + this._currency.to_json()
+      ? this.to_text() + '/' + this._currency.to_json()
       : this.to_text() + '/' + this._currency.to_json()
         + '/' + this._issuer.to_json(opts);
 };
