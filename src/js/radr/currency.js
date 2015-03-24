@@ -91,7 +91,7 @@ Currency.prototype.parse_json = function(j, shouldInterpretXrpAsIou) {
           break;
         }
 
-        if (!currencyCode || /^(VBC)$/.test(currencyCode)) {
+        if (/^(VBC)$/.test(currencyCode)) {
           this.parse_hex(shouldInterpretXrpAsIou ? Currency.HEX_CURRENCY_BAD : Currency.HEX_TWOFIFTYFIVE);
 
           // early break, we can't have interest on VRP/VBC
@@ -215,7 +215,7 @@ Currency.prototype._update = function() {
     }
 
     this._type = 0;
-  } else if (bytes[0] === 0xFF) { // VBC currency
+  } else if (bytes.slice(-1) == 0xFF) { // VBC currency
 
     this._native = true;
     this._iso_code = 'VBC';
