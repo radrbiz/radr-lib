@@ -671,13 +671,18 @@ Amount.prototype.parse_json = function(j) {
         j.copyTo(this);
       } else if (j.hasOwnProperty('value')) {
         // Parse the passed value to sanitize and copy it.
-        this._currency.parse_json(j.currency, true); // Never XRP.
+        this._currency.parse_json(j.currency);
 
         if (typeof j.issuer === 'string') {
           this._issuer.parse_json(j.issuer);
         }
 
-        this.parse_value(j.value);
+        if(this._currency.get_iso() === 'VBC' || this._currency.get_iso() === 'VRP'){
+          this.parse_native(j.value)
+        }
+        else {
+          this.parse_value(j.value);
+        }
       }
       break;
 

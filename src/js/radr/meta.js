@@ -186,11 +186,11 @@ Meta.prototype.getAffectedBooks = function() {
     var getsKey = gets.currency().to_json();
     var paysKey = pays.currency().to_json();
 
-    if (getsKey !== 'XRP') {
+    if (getsKey !== 'VRP') {
       getsKey += '/' + gets.issuer().to_json();
     }
 
-    if (paysKey !== 'XRP') {
+    if (paysKey !== 'VRP') {
       paysKey += '/' + pays.issuer().to_json();
     }
 
