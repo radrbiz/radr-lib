@@ -644,8 +644,9 @@ Amount.prototype.parse_json = function(j) {
         if (m[3]) {
           this._issuer  = UInt160.from_json(m[3]);
         } else if(m[3] === 'VBC') { // native VBC
-          this._issuer  = UInt160.from_json(Currency.HEX_TWOFIFTYFIVE);
           this.parse_native(j);
+          this._currency  = Currency.from_json(UInt160.HEX_TWOFIFTYFIVE);
+          this._issuer    = UInt160.from_json(UInt160.HEX_TWOFIFTYFIVE);
         } else {
           this._issuer  = UInt160.from_json('1');
           this.parse_value(m[1]);
