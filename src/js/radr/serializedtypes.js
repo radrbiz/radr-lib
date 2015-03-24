@@ -315,6 +315,10 @@ var STAmount = exports.Amount = new SerializedType({
       // so this code can make certain guarantees about the encoded value.
       valueBytes[0] &= 0x3f;
 
+      if (amount.currency.get_iso() === 'VBC'){ // VBC requires 0x20 to be set on first value
+        valueBytes[0] |= 0x20;
+      }
+
       if (!amount.is_negative()) {
         valueBytes[0] |= 0x40;
       }
