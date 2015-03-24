@@ -677,7 +677,7 @@ Amount.prototype.parse_json = function(j) {
           this._issuer.parse_json(j.issuer);
         }
 
-        if(this._currency.get_iso() === 'VBC' || this._currency.get_iso() === 'VRP'){
+        if(this._currency.is_native()){
           this.parse_native(j.value)
         }
         else {
