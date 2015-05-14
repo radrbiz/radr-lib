@@ -289,6 +289,11 @@ exports.tx = {
     [ 'Destination'        , REQUIRED ],
     [ 'Amount'             , OPTIONAL ]
   ]),
+  ActiveAccount: [183].concat(base, [
+    [ 'Referee'            , REQUIRED ],
+    [ 'Reference'          , REQUIRED ],
+    [ 'Amount'             , OPTIONAL ],
+  ]),
   Contract: [9].concat(base, [
     [ 'Expiration'         , REQUIRED ],
     [ 'BondAmount'         , REQUIRED ],
